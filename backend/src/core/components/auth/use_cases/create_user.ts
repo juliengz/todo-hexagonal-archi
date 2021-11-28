@@ -1,8 +1,8 @@
 import { Result, ok, err } from 'neverthrow';
+import { UserRepositoryInterface } from '../../../ports/persistence/user_repository_interface';
 import { User } from '../domain/entities/user';
 import { UserDtoInterface } from '../domain/entities/user_dto_interface';
 import { AuthDomainErrorInterface } from '../domain/errors/auth_domain_error_interface';
-import { UserRepositoryInterface } from '../domain/ports/user_repository_interface';
 import { AuthUseCaseErrorInterface } from '../errors/auth_use_case_error_interface';
 
 export class CreateUser {

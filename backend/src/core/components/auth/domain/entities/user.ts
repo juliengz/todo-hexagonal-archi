@@ -17,14 +17,14 @@ export class User {
         const passwordErrors = [];
 
         if (login.length === 0) loginErrors.push('required');
-        if (login.length < 5) loginErrors.push('> 4');
-        if (login === 'joe') loginErrors.push('No joe pls !');
         if (password.length === 0) passwordErrors.push('required');
 
         if (loginErrors.length > 0) errors = { login: loginErrors, ...errors };
         if (passwordErrors.length > 0) errors = { password: passwordErrors, ...errors };
 
-        if (!errors) { return ok(new User(login, bcrypt.hashSync(password, saltRounds))); }
+        if (Object.entries(errors).length === 0 && errors.constructor === Object) {
+            return ok(new User(login, bcrypt.hashSync(password, saltRounds)));
+        }
 
         return err(new InvalidUser(errors));
     }

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import { User } from '../../../core/auth/domain/entities/user';
-import { UserRepositoryInterface } from '../../../core/auth/domain/ports/user_repository_interface';
+import { User } from '../../../core/components/auth/domain/entities/user';
+import { UserRepositoryInterface } from '../../../core/ports/persistence/user_repository_interface';
 
 export class UserRepository implements UserRepositoryInterface {
     private users: Map<string, User> = new Map();

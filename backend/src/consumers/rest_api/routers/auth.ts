@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { CreateUser } from '../../../core/auth/use_cases/create_user';
+import { CreateUser } from '../../../core/components/auth/use_cases/create_user';
 import { UserRepository } from '../../../providers/persistence/in_memory/user_repository';
 
 export const authRouter = Router();
