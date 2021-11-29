@@ -1,14 +1,17 @@
 /* eslint-disable no-console */
 import bcrypt from 'bcrypt';
 import { err, ok, Result } from 'neverthrow';
+import { DtoInterface } from '../../../../ports/dto/dto_interface';
+import { Uuid } from '../../../../ports/persistence/id_generator';
 import { AuthDomainErrorInterface } from '../errors/auth_domain_error_interface';
 import { InvalidUser } from '../errors/invalid_user';
 import { UserDtoInterface } from './user_dto_interface';
 
 const saltRounds = 10;
 
-export class User {
+export class User implements DtoInterface {
     public static async create(
+        id: Uuid,
         login: string,
         password: string,
     ): Promise<Result<User, AuthDomainErrorInterface>> {
@@ -23,16 +26,18 @@ export class User {
         if (passwordErrors.length > 0) errors = { password: passwordErrors, ...errors };
 
         if (Object.entries(errors).length === 0 && errors.constructor === Object) {
-            return ok(new User(login, bcrypt.hashSync(password, saltRounds)));
+            return ok(new User(id, login, bcrypt.hashSync(password, saltRounds)));
         }
 
         return err(new InvalidUser(errors));
     }
 
-    private constructor(
+    constructor(
+        private readonly id: Uuid,
         private login: string,
         private cryptedPassword: string,
     ) {
+        this.id = id;
         this.login = login;
         this.cryptedPassword = cryptedPassword;
     }
@@ -43,11 +48,7 @@ export class User {
         return match;
     }
 
-    getLogin(): string {
-        return this.login;
-    }
-
     toDto(): UserDtoInterface {
-        return { login: this.login };
+        return { id: this.id, login: this.login };
     }
 }

@@ -4,10 +4,10 @@ import { User } from '../../../core/components/auth/domain/entities/user';
 import { UserRepositoryInterface } from '../../../core/ports/persistence/user_repository_interface';
 
 export class UserRepository implements UserRepositoryInterface {
-    private users: Map<string, User> = new Map();
+    private users: User[] = [];
 
     persist(user: User): Promise<void> {
-        this.users.set(user.getLogin(), user);
+        this.users.push(user);
         console.log(this.users);
 
         return Promise.resolve();

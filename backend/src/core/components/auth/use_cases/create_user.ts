@@ -1,4 +1,5 @@
 import { Result, ok, err } from 'neverthrow';
+import { IdGeneratorInterface } from '../../../ports/persistence/id_generator';
 import { UserRepositoryInterface } from '../../../ports/persistence/user_repository_interface';
 import { User } from '../domain/entities/user';
 import { UserDtoInterface } from '../domain/entities/user_dto_interface';
@@ -6,15 +7,19 @@ import { AuthDomainErrorInterface } from '../domain/errors/auth_domain_error_int
 import { AuthUseCaseErrorInterface } from '../errors/auth_use_case_error_interface';
 
 export class CreateUser {
-    constructor(private readonly userRepository: UserRepositoryInterface) {
+    constructor(
+        private userRepository: UserRepositoryInterface,
+        private idGenerator: IdGeneratorInterface,
+    ) {
         this.userRepository = userRepository;
+        this.idGenerator = idGenerator;
     }
 
     async execute(
         login: string,
         password: string,
     ): Promise<Result<UserDtoInterface, AuthUseCaseErrorInterface|AuthDomainErrorInterface>> {
-        const result = await User.create(login, password);
+        const result = await User.create(this.idGenerator.generateId(), login, password);
 
         if (result.isOk()) {
             await this.userRepository.persist(result.value);
