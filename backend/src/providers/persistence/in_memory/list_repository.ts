@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-import { List } from '../../../core/components/todo/domain/entities/list';
-import { ListRepositoryInterface } from '../../../core/ports/persistence/list_repository_interface';
+
+import { ListRepositoryInterface } from '../../../core/todo/application/ports/repositories/list_repository_interface';
+import { List } from '../../../core/todo/domain/entities/list';
 
 export class ListRepository implements ListRepositoryInterface {
     private lists: List[];
@@ -13,5 +14,9 @@ export class ListRepository implements ListRepositoryInterface {
         this.lists.push(list);
 
         return Promise.resolve();
+    }
+
+    findAll(): Promise<List[]> {
+        return Promise.resolve(this.lists);
     }
 }
