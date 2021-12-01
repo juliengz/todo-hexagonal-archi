@@ -1,6 +1,6 @@
 import { Result, ok, err } from 'neverthrow';
-import { IdGeneratorInterface } from '../../../ports/persistence/id_generator';
-import { UserRepositoryInterface } from '../../../ports/persistence/user_repository_interface';
+import { IdGeneratorInterface } from '../../../shared/id_generator';
+import { UserRepositoryInterface } from '../ports/repositories/user_repository_interface';
 import { User } from '../domain/entities/user';
 import { AuthDomainErrorInterface } from '../domain/errors/auth_domain_error_interface';
 import { AuthUseCaseErrorInterface } from '../errors/auth_use_case_error_interface';

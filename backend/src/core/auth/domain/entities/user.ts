@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import bcrypt from 'bcrypt';
 import { err, ok, Result } from 'neverthrow';
-import { Uuid } from '../../../../ports/persistence/id_generator';
+import { Uuid } from '../../../../shared/id_generator';
 import { AuthDomainErrorInterface } from '../errors/auth_domain_error_interface';
 import { InvalidUser } from '../errors/invalid_user';
 import { UserValidator } from './user_validator';

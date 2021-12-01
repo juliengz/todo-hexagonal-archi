@@ -2,13 +2,13 @@
 /* eslint-disable no-unused-vars */
 import { Task } from './task';
 
-interface ListPropsInterface {
+export interface ListPropsInterface {
     id: string
     label: string
     tasks: Task[];
 }
 
-interface ListCreationPropsInterface {
+export interface ListCreationPropsInterface {
     id: string
     label: string
 }

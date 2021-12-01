@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { CreateUser } from '../../../core/components/auth/use_cases/create_user';
+import { CreateUser } from '../../../core/auth/use_cases/create_user';
 import { UuidGenerator } from '../../../providers/persistence/in_memory/iuid_generator';
 import { UserRepository } from '../../../providers/persistence/in_memory/user_repository';
 

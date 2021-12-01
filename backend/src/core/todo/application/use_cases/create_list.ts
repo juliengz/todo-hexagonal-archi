@@ -1,11 +1,10 @@
+import { err, ok, Result } from 'neverthrow';
 import { IdGeneratorInterface } from '../../../../shared/id_generator';
-import { List } from '../../domain/entities/list';
+import { List, ListCreationPropsInterface } from '../../domain/entities/list';
+import { InvalidList } from '../../domain/errors/invalid_list';
+import { TodoUseCaseErrorInterface } from '../errors/todo_use_case_error_interface';
 import { ListRepositoryInterface } from '../ports/repositories/list_repository_interface';
-
-type ListParams = {
-    id: string;
-    label: string;
-}
+import { CreateListValidator } from '../validation/create_list_validator';
 
 export class CreateList {
     constructor(
@@ -17,8 +16,13 @@ export class CreateList {
     }
 
     async execute(
-        payload: ListParams,
+        payload: ListCreationPropsInterface,
     ): Promise<void> {
+        const validator = new CreateListValidator();
+        validator.validate(payload);
+
+        if (validator.getErrors()) throw new Error('validation error');
+
         const list = List.create({
             id: this.idGenerator.generateId(),
             label: payload.label,

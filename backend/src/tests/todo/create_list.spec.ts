@@ -30,15 +30,24 @@ describe('I want to create a new List', () => {
     it('should create list with parameters', async () => {
         await createList.execute({
             id: idGenerator.generateId(),
-            label: 'hexa archi reminder',
+            label: 'reminder',
         });
 
         const lists = await listRepository.findAll();
 
         expect(lists[0].toPrimitives()).toEqual({
             id: '76fa3660-7d9a-4013-9f47-82ec2b8b1af1',
-            label: 'hexa archi reminder',
+            label: 'reminder',
             tasks: [],
         });
+    });
+
+    it('should return validation errors', async () => {
+        const list = await createList.execute({
+            id: idGenerator.generateId(),
+            label: 'il faut que je pense à mettre moins de 25 caractères',
+        });
+
+        expect(true).toEqual(true);
     });
 });
