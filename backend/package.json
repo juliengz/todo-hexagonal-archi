@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon ./src/index.ts",
     "lint:js": "eslint --ext ts,js .",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "keywords": [],
   "author": "",

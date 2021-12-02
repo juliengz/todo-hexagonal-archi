@@ -1,10 +1,11 @@
 /* eslint-disable class-methods-use-this */
 
-import { v4 } from 'uuid';
 import { IdGeneratorInterface } from '../../../core/ports/persistence/id_generator_interface';
 
-export class UuidGenerator implements IdGeneratorInterface {
+export const expectedId = '0000000-0000-0000-0000-000000000000';
+
+export class UuidGeneratorStub implements IdGeneratorInterface {
     generateId(): string {
-        return v4();
+        return expectedId;
     }
 }

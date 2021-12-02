@@ -4,4 +4,5 @@ export interface CreateListCommandInterface {
     id: string
     label: string
     tasks: Task[]
+    userId: string
 }

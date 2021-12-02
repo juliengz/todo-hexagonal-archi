@@ -1,7 +1,7 @@
-import { CommandHandlerInterface } from '../../../../shared_kernel/command_handler_interface';
-import { IdGeneratorInterface } from '../../../../shared_kernel/id_generator';
+import { IdGeneratorInterface } from '../../../../ports/persistence/id_generator_interface';
+import { ListRepositoryInterface } from '../../../../ports/persistence/list_repository_interface';
+import { CommandHandlerInterface } from '../../../../shared_kernel/command/command_handler_interface';
 import { List } from '../../domain/entities/list';
-import { ListRepositoryInterface } from '../ports/repositories/list_repository_interface';
 import { CreateListValidator } from '../validation/create_list_validator';
 import { CreateListCommandInterface } from './create_list_command_interface';
 
@@ -25,7 +25,8 @@ export class CreateListCommandHandler implements CommandHandlerInterface<CreateL
         const list = List.create({
             id: this.idGenerator.generateId(),
             label: payload.label,
-            tasks: [],
+            tasks: payload.tasks,
+            userId: payload.userId,
         });
 
         await this.listRepository.persist(list);

@@ -4,9 +4,12 @@
 
 import { CreateListCommandHandler } from '../../core/components/todo/application/commands/create_list_command_handler';
 import {
-    ListRepositoryInterface,
-} from '../../core/components/todo/application/ports/repositories/list_repository_interface';
-import { IdGeneratorInterface } from '../../core/shared_kernel/id_generator';
+    CreateListCommandInterface,
+} from '../../core/components/todo/application/commands/create_list_command_interface';
+import { List } from '../../core/components/todo/domain/entities/list';
+import { IdGeneratorInterface } from '../../core/ports/persistence/id_generator_interface';
+import { ListRepositoryInterface } from '../../core/ports/persistence/list_repository_interface';
+import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 
 class StubIdGenerator implements IdGeneratorInterface {
@@ -22,7 +25,7 @@ describe('I want to create a new List', () => {
 
     beforeEach(() => {
         listRepository = new ListRepository();
-        idGenerator = new StubIdGenerator();
+        idGenerator = new UuidGeneratorStub();
         createList = new CreateListCommandHandler(
             listRepository,
             idGenerator,
@@ -30,28 +33,35 @@ describe('I want to create a new List', () => {
     });
 
     it('should create list with parameters', async () => {
-        await createList.execute({
+        const payload: CreateListCommandInterface = {
             id: idGenerator.generateId(),
             label: 'reminder',
             tasks: [],
-        });
+            userId: '0000',
+        };
 
-        const lists = await listRepository.findAll();
+        await createList.execute(payload);
+
+        const lists: List[] = await listRepository.findAll();
 
         expect(lists[0].toPrimitives()).toEqual({
-            id: '76fa3660-7d9a-4013-9f47-82ec2b8b1af1',
-            label: 'reminder',
-            tasks: [],
+            id: expectedId,
+            label: payload.label,
+            tasks: payload.tasks,
+            userId: payload.userId,
         });
     });
 
     it('should throw validation errors', async () => {
+        const payload: CreateListCommandInterface = {
+            id: idGenerator.generateId(),
+            label: 'il faut que je pense à mettre moins de 25 caractères',
+            tasks: [],
+            userId: '0000',
+        };
+
         await expect(
-            createList.execute({
-                id: idGenerator.generateId(),
-                label: 'il faut que je pense à mettre moins de 25 caractères',
-                tasks: [],
-            }),
+            createList.execute(payload),
         ).rejects.toThrow('validation error');
     });
 });

@@ -4,6 +4,7 @@ export interface ListPropsInterface {
     id: string
     label: string
     tasks: Task[];
+    userId: string;
 }
 
 export class List {
@@ -13,14 +14,18 @@ export class List {
 
     #tasks: Task[];
 
+    #userId: string
+
     constructor(
         id: string,
         label: string,
         tasks: Task[],
+        userId: string,
     ) {
         this.#id = id;
         this.#label = label;
         this.#tasks = tasks;
+        this.#userId = userId;
     }
 
     static create(props: ListPropsInterface): List {
@@ -28,6 +33,7 @@ export class List {
             props.id,
             props.label,
             props.tasks,
+            props.userId,
         );
     }
 
@@ -36,6 +42,7 @@ export class List {
             id: this.#id,
             label: this.#label,
             tasks: this.#tasks,
+            userId: this.#userId,
         };
     }
 }
