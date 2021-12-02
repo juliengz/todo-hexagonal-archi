@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import bcrypt from 'bcrypt';
 import { err, ok, Result } from 'neverthrow';
-import { Uuid } from '../../../../shared/id_generator';
 import { AuthDomainErrorInterface } from '../errors/auth_domain_error_interface';
 import { InvalidUser } from '../errors/invalid_user';
 import { UserValidator } from './user_validator';
@@ -10,7 +9,7 @@ const saltRounds = 10;
 
 export class User {
     public static async create(
-        id: Uuid,
+        id: String,
         login: string,
         password: string,
     ): Promise<Result<User, AuthDomainErrorInterface>> {
@@ -28,7 +27,7 @@ export class User {
     }
 
     constructor(
-        private readonly id: Uuid,
+        private readonly id: String,
         private login: string,
         private cryptedPassword: string,
     ) {

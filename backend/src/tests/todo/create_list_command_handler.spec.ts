@@ -2,10 +2,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 
-import { CreateListCommandHandler } from '../../core/todo/application/commands/create_list_command_handler';
-import { ListRepositoryInterface } from '../../core/todo/application/ports/repositories/list_repository_interface';
+import { CreateListCommandHandler } from '../../core/components/todo/application/commands/create_list_command_handler';
+import {
+    ListRepositoryInterface,
+} from '../../core/components/todo/application/ports/repositories/list_repository_interface';
+import { IdGeneratorInterface } from '../../core/shared_kernel/id_generator';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
-import { IdGeneratorInterface } from '../../shared/id_generator';
 
 class StubIdGenerator implements IdGeneratorInterface {
     generateId(): string {

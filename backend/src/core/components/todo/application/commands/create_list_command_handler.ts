@@ -1,5 +1,5 @@
-import { CommandHandlerInterface } from '../../../../shared/command_handler_interface';
-import { IdGeneratorInterface } from '../../../../shared/id_generator';
+import { CommandHandlerInterface } from '../../../../shared_kernel/command_handler_interface';
+import { IdGeneratorInterface } from '../../../../shared_kernel/id_generator';
 import { List } from '../../domain/entities/list';
 import { ListRepositoryInterface } from '../ports/repositories/list_repository_interface';
 import { CreateListValidator } from '../validation/create_list_validator';
