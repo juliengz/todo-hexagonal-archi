@@ -10,13 +10,23 @@ export class ListRepository implements ListRepositoryInterface {
         this.lists = [];
     }
 
-    persist(list: List): Promise<void> {
+    async persist(list: List): Promise<void> {
         this.lists.push(list);
 
         return Promise.resolve();
     }
 
-    findAll(): Promise<List[]> {
+    async findAll(): Promise<List[]> {
         return Promise.resolve(this.lists);
+    }
+
+    async findById(id: string): Promise<List | null> {
+        const foundlist = this.lists.find((list) => list.id === id);
+
+        return foundlist || null;
+    }
+
+    async exists(list: List): Promise<boolean> {
+        return (await this.findById(list.id)) != null;
     }
 }

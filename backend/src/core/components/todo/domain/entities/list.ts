@@ -8,13 +8,13 @@ export interface ListPropsInterface {
 }
 
 export class List {
-    readonly #id: string
+    readonly id: string
 
-    #label: string
+    readonly label: string
 
-    #tasks: Task[];
+    readonly tasks: Task[];
 
-    #userId: string
+    readonly userId: string
 
     constructor(
         id: string,
@@ -22,10 +22,10 @@ export class List {
         tasks: Task[],
         userId: string,
     ) {
-        this.#id = id;
-        this.#label = label;
-        this.#tasks = tasks;
-        this.#userId = userId;
+        this.id = id;
+        this.label = label;
+        this.tasks = tasks;
+        this.userId = userId;
     }
 
     static create(props: ListPropsInterface): List {
@@ -39,10 +39,26 @@ export class List {
 
     toPrimitives(): ListPropsInterface {
         return {
-            id: this.#id,
-            label: this.#label,
-            tasks: this.#tasks,
-            userId: this.#userId,
+            id: this.id,
+            label: this.label,
+            tasks: this.tasks,
+            userId: this.userId,
         };
+    }
+
+    addTask(
+        id: string,
+        label: string,
+        deadline: Date,
+    ) {
+        const task = Task.create({
+            id,
+            listId: this.id,
+            label,
+            finished: false,
+            deadline,
+        });
+
+        this.tasks.push(task);
     }
 }

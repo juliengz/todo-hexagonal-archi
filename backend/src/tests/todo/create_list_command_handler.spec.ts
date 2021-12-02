@@ -12,12 +12,6 @@ import { ListRepositoryInterface } from '../../core/ports/persistence/list_repos
 import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 
-class StubIdGenerator implements IdGeneratorInterface {
-    generateId(): string {
-        return '76fa3660-7d9a-4013-9f47-82ec2b8b1af1';
-    }
-}
-
 describe('I want to create a new List', () => {
     let listRepository: ListRepositoryInterface;
     let idGenerator: IdGeneratorInterface;
@@ -62,6 +56,6 @@ describe('I want to create a new List', () => {
 
         await expect(
             createList.execute(payload),
-        ).rejects.toThrow('validation error');
+        ).rejects.toThrowError('validation error');
     });
 });

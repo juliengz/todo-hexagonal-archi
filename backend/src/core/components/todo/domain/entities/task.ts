@@ -2,53 +2,53 @@ export interface TaskPropsInterface {
     id: string,
     label: string,
     finished: boolean,
-    deadline?: Date,
+    deadline: Date,
     listId: string
 }
 
 export class Task {
-    readonly #id: string
+    readonly id: string
 
-    #label: string;
+    label: string;
 
-    #finished: boolean;
+    finished: boolean;
 
-    #deadline?: Date;
+    deadline: Date;
 
-    #listId: string;
+    listId: string;
 
     constructor(
         id: string,
+        listId: string,
         label: string,
         finished: boolean,
         deadline: Date,
-        listId: string,
 
     ) {
-        this.#id = id;
-        this.#label = label;
-        this.#finished = finished;
-        this.#deadline = deadline;
-        this.#listId = listId;
+        this.id = id;
+        this.listId = listId;
+        this.label = label;
+        this.finished = finished;
+        this.deadline = deadline;
     }
 
     static create(props: TaskPropsInterface): Task {
         return new Task(
             props.id,
-            props.label,
-            false,
-            props.deadline,
             props.listId,
+            props.label,
+            props.finished,
+            props.deadline,
         );
     }
 
     toPrimitive(): TaskPropsInterface {
         return {
-            id: this.#id,
-            label: this.#label,
-            finished: this.#finished,
-            deadline: this.#deadline,
-            listId: this.#listId,
+            id: this.id,
+            label: this.label,
+            finished: this.finished,
+            deadline: this.deadline,
+            listId: this.listId,
         };
     }
 }

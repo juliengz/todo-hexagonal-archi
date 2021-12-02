@@ -5,20 +5,20 @@ export interface UserPropsInterface {
 }
 
 export class User {
-    readonly #id: string
+    readonly id: string
 
-    #login: string
+    readonly login: string
 
-    #cryptedPassword: string;
+    readonly cryptedPassword: string;
 
     constructor(
         id: string,
         login: string,
         cryptedPassword: string,
     ) {
-        this.#id = id;
-        this.#login = login;
-        this.#cryptedPassword = cryptedPassword;
+        this.id = id;
+        this.login = login;
+        this.cryptedPassword = cryptedPassword;
     }
 
     static create(props: UserPropsInterface): User {
@@ -31,9 +31,9 @@ export class User {
 
     toPrimitives(): UserPropsInterface {
         return {
-            id: this.#id,
-            login: this.#login,
-            cryptedPassword: this.#cryptedPassword,
+            id: this.id,
+            login: this.login,
+            cryptedPassword: this.cryptedPassword,
         };
     }
 }

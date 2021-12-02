@@ -10,13 +10,23 @@ export class UserRepository implements UserRepositoryInterface {
         this.users = [];
     }
 
-    persist(user: User): Promise<void> {
+    async persist(user: User): Promise<void> {
         this.users.push(user);
 
         return Promise.resolve();
     }
 
-    findAll(): Promise<User[]> {
+    async findAll(): Promise<User[]> {
         return Promise.resolve(this.users);
+    }
+
+    async findById(id: string): Promise<User | null> {
+        const founduser = this.users.find((user) => user.id === id);
+
+        return founduser || null;
+    }
+
+    async exists(user: User): Promise<boolean> {
+        return (await this.findById(user.id)) != null;
     }
 }
