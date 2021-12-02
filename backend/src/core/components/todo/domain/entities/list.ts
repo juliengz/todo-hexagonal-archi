@@ -1,5 +1,3 @@
-/* eslint-disable no-empty-function */
-/* eslint-disable no-unused-vars */
 import { Task } from './task';
 
 export interface ListPropsInterface {
@@ -9,20 +7,20 @@ export interface ListPropsInterface {
 }
 
 export class List {
-    readonly id: string
+    readonly #id: string
 
-    label: string
+    #label: string
 
-    tasks: Task[];
+    #tasks: Task[];
 
     constructor(
         id: string,
         label: string,
         tasks: Task[],
     ) {
-        this.id = id;
-        this.label = label;
-        this.tasks = tasks;
+        this.#id = id;
+        this.#label = label;
+        this.#tasks = tasks;
     }
 
     static create(props: ListPropsInterface): List {
@@ -35,9 +33,9 @@ export class List {
 
     toPrimitives(): ListPropsInterface {
         return {
-            id: this.id,
-            label: this.label,
-            tasks: this.tasks,
+            id: this.#id,
+            label: this.#label,
+            tasks: this.#tasks,
         };
     }
 }

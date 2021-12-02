@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import { User } from '../../../core/auth/domain/entities/user';
-import { UserRepositoryInterface } from '../../../core/auth/ports/repositories/user_repository_interface';
+import { User } from '../../../core/components/authentication/domain/entities/user';
+import { UserRepositoryInterface } from '../../../core/ports/repositories/user_repository_interface';
 
 export const inMemoryUserData: User[] = [
     new User(
