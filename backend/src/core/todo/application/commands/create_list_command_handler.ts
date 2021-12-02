@@ -1,12 +1,11 @@
-import { err, ok, Result } from 'neverthrow';
+import { CommandHandlerInterface } from '../../../../shared/command_handler_interface';
 import { IdGeneratorInterface } from '../../../../shared/id_generator';
-import { List, ListCreationPropsInterface } from '../../domain/entities/list';
-import { InvalidList } from '../../domain/errors/invalid_list';
-import { TodoUseCaseErrorInterface } from '../errors/todo_use_case_error_interface';
+import { List } from '../../domain/entities/list';
 import { ListRepositoryInterface } from '../ports/repositories/list_repository_interface';
 import { CreateListValidator } from '../validation/create_list_validator';
+import { CreateListCommandInterface } from './create_list_command_interface';
 
-export class CreateList {
+export class CreateListCommandHandler implements CommandHandlerInterface<CreateListCommandInterface, void> {
     constructor(
         private listRepository: ListRepositoryInterface,
         private idGenerator: IdGeneratorInterface,
@@ -16,7 +15,7 @@ export class CreateList {
     }
 
     async execute(
-        payload: ListCreationPropsInterface,
+        payload: CreateListCommandInterface,
     ): Promise<void> {
         const validator = new CreateListValidator();
         validator.validate(payload);
@@ -26,6 +25,7 @@ export class CreateList {
         const list = List.create({
             id: this.idGenerator.generateId(),
             label: payload.label,
+            tasks: [],
         });
 
         await this.listRepository.persist(list);

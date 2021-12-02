@@ -8,11 +8,6 @@ export interface ListPropsInterface {
     tasks: Task[];
 }
 
-export interface ListCreationPropsInterface {
-    id: string
-    label: string
-}
-
 export class List {
     readonly id: string
 
@@ -23,16 +18,18 @@ export class List {
     constructor(
         id: string,
         label: string,
+        tasks: Task[],
     ) {
         this.id = id;
         this.label = label;
-        this.tasks = [];
+        this.tasks = tasks;
     }
 
-    static create(props: ListCreationPropsInterface): List {
+    static create(props: ListPropsInterface): List {
         return new List(
             props.id,
             props.label,
+            props.tasks,
         );
     }
 

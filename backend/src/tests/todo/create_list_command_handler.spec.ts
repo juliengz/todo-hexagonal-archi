@@ -2,8 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 
+import { CreateListCommandHandler } from '../../core/todo/application/commands/create_list_command_handler';
 import { ListRepositoryInterface } from '../../core/todo/application/ports/repositories/list_repository_interface';
-import { CreateList } from '../../core/todo/application/use_cases/create_list';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 import { IdGeneratorInterface } from '../../shared/id_generator';
 
@@ -16,12 +16,12 @@ class StubIdGenerator implements IdGeneratorInterface {
 describe('I want to create a new List', () => {
     let listRepository: ListRepositoryInterface;
     let idGenerator: IdGeneratorInterface;
-    let createList: CreateList;
+    let createList: CreateListCommandHandler;
 
     beforeEach(() => {
         listRepository = new ListRepository();
         idGenerator = new StubIdGenerator();
-        createList = new CreateList(
+        createList = new CreateListCommandHandler(
             listRepository,
             idGenerator,
         );
@@ -31,6 +31,7 @@ describe('I want to create a new List', () => {
         await createList.execute({
             id: idGenerator.generateId(),
             label: 'reminder',
+            tasks: [],
         });
 
         const lists = await listRepository.findAll();
@@ -42,12 +43,13 @@ describe('I want to create a new List', () => {
         });
     });
 
-    it('should return validation errors', async () => {
-        const list = await createList.execute({
-            id: idGenerator.generateId(),
-            label: 'il faut que je pense à mettre moins de 25 caractères',
-        });
-
-        expect(true).toEqual(true);
+    it('should throw validation errors', async () => {
+        await expect(
+            createList.execute({
+                id: idGenerator.generateId(),
+                label: 'il faut que je pense à mettre moins de 25 caractères',
+                tasks: [],
+            }),
+        ).rejects.toThrow('validation error');
     });
 });
