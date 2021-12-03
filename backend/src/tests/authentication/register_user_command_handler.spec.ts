@@ -46,14 +46,4 @@ describe('I want to register a new user', () => {
             cryptedPassword: payload.password,
         });
     });
-
-    // it('should throw validation errors', async () => {
-    //     await expect(
-    //         createList.execute({
-    //             id: idGenerator.generateId(),
-    //             label: 'il faut que je pense à mettre moins de 25 caractères',
-    //             tasks: [],
-    //         }),
-    //     ).rejects.toThrow('validation error');
-    // });
 });

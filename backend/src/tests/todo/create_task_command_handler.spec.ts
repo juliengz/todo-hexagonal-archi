@@ -9,13 +9,20 @@ import {
 } from '../../core/components/todo/application/commands/create_task_command_interface';
 import { ListNotFoundError } from '../../core/components/todo/application/errors/list_not_found_error';
 import { List } from '../../core/components/todo/domain/entities/list';
-import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
+import { expectedId, UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 
 describe('I want to add a new Task to a List', () => {
     let listRepository: ListRepository;
     let idGenerator: UuidGeneratorStub;
     let createTask: CreateTaskCommandHandler;
+
+    const taskOwnerList = new List(
+        'uuid-list-1',
+        'Owner list',
+        [],
+        'uuid-user-1',
+    );
 
     beforeEach(async () => {
         listRepository = new ListRepository();
@@ -27,29 +34,32 @@ describe('I want to add a new Task to a List', () => {
     });
     describe('And the provided parameters are valid', () => {
         it('should add 1 task with parameters', async () => {
-            const list = new List(
-                'uuid-list-1',
-                'Fake name',
-                [],
-                'uuid-user-1',
-            );
-
-            listRepository.import([list]);
+            listRepository.import([taskOwnerList]);
 
             const payload: CreateTaskCommandInterface = {
                 id: idGenerator.generateId(),
-                listId: list.id,
+                listId: taskOwnerList.id,
                 label: 'My first task label',
                 description: 'My first task description',
                 deadline: new Date(),
             };
 
+            const expectedTask = {
+                id: expectedId,
+                listId: payload.listId,
+                label: payload.label,
+                finished: false,
+                description: payload.description,
+                deadline: payload.deadline,
+            };
+
             await createTask.execute(payload);
 
-            expect(list.tasks.length).toEqual(1);
-            expect(list.tasks[0].label).toEqual('My first task label');
+            expect(taskOwnerList.tasks.length).toEqual(1);
+            expect(taskOwnerList.tasks[0]).toEqual(expectedTask);
         });
     });
+    
 
     describe('And the provided task owner list does not exist', () => {
         it('should throw "list not found" error', async () => {

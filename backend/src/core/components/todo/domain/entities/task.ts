@@ -54,20 +54,9 @@ export class Task {
     }
 
     validate() {
-        if (this.label.length === 0) throw new RequiredError('List label');
-        if (this.label.length > 25) throw new MaxLengthError('List label', 25);
-        if (this.description.length === 0) throw new RequiredError('List label');
-        if (this.description.length > 150) throw new MaxLengthError('List label', 150);
-    }
-
-    toPrimitive(): TaskPropsInterface {
-        return {
-            id: this.id,
-            listId: this.listId,
-            label: this.label,
-            description: this.description,
-            finished: this.finished,
-            deadline: this.deadline,
-        };
+        if (this.label.length === 0) throw new RequiredError('Task label');
+        if (this.label.length > 25) throw new MaxLengthError('Task label', 25);
+        if (this.description.length === 0) throw new RequiredError('Task description');
+        if (this.description.length > 150) throw new MaxLengthError('Task description', 150);
     }
 }

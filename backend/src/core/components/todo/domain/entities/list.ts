@@ -46,15 +46,6 @@ export class List {
         if (this.label.length > 25) throw new MaxLengthError('List label', 25);
     }
 
-    toPrimitives(): ListPropsInterface {
-        return {
-            id: this.id,
-            label: this.label,
-            tasks: this.tasks,
-            userId: this.userId,
-        };
-    }
-
     addTask(
         id: string,
         label: string,

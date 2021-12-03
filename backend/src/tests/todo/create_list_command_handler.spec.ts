@@ -9,14 +9,12 @@ import {
 import { List } from '../../core/components/todo/domain/entities/list';
 import { MaxLengthError } from '../../core/components/todo/domain/errors/max_length_error';
 import { RequiredError } from '../../core/components/todo/domain/errors/required_error';
-import { IdGeneratorInterface } from '../../core/ports/persistence/id_generator_interface';
-import { ListRepositoryInterface } from '../../core/ports/persistence/list_repository_interface';
 import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 
 describe('I want to create a new List', () => {
-    let listRepository: ListRepositoryInterface;
-    let idGenerator: IdGeneratorInterface;
+    let listRepository: ListRepository;
+    let idGenerator: UuidGeneratorStub;
     let createList: CreateListCommandHandler;
 
     beforeEach(() => {
@@ -40,7 +38,7 @@ describe('I want to create a new List', () => {
 
         const lists: List[] = await listRepository.findAll();
 
-        expect(lists[0].toPrimitives()).toEqual({
+        expect(lists[0]).toEqual({
             id: expectedId,
             label: payload.label,
             tasks: payload.tasks,
@@ -51,7 +49,7 @@ describe('I want to create a new List', () => {
     it('should throw "max length" error', async () => {
         const payload: CreateListCommandInterface = {
             id: idGenerator.generateId(),
-            label: 'i have to think about writing less than 25 characters',
+            label: 'I have to think about writing less than 25 characters',
             tasks: [],
             userId: 'uuid-user-1',
         };
