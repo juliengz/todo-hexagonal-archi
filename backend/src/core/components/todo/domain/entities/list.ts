@@ -1,3 +1,5 @@
+import { MaxLengthError } from '../errors/max_length_error';
+import { RequiredError } from '../errors/required_error';
 import { Task } from './task';
 
 export interface ListPropsInterface {
@@ -26,6 +28,8 @@ export class List {
         this.label = label;
         this.tasks = tasks;
         this.userId = userId;
+
+        this.validate();
     }
 
     static create(props: ListPropsInterface): List {
@@ -35,6 +39,11 @@ export class List {
             props.tasks,
             props.userId,
         );
+    }
+
+    validate() {
+        if (this.label.length === 0) throw new RequiredError('List label');
+        if (this.label.length > 25) throw new MaxLengthError('List label', 25);
     }
 
     toPrimitives(): ListPropsInterface {
@@ -49,12 +58,14 @@ export class List {
     addTask(
         id: string,
         label: string,
+        description: string,
         deadline: Date,
     ) {
         const task = Task.create({
             id,
             listId: this.id,
             label,
+            description,
             finished: false,
             deadline,
         });

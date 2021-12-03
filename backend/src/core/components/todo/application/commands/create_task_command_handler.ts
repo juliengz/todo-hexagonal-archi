@@ -1,7 +1,7 @@
 import { IdGeneratorInterface } from '../../../../ports/persistence/id_generator_interface';
 import { ListRepositoryInterface } from '../../../../ports/persistence/list_repository_interface';
 import { CommandHandlerInterface } from '../../../../shared_kernel/command/command_handler_interface';
-import { ListNotFoundError } from '../../domain/errors/list_not_found_error';
+import { ListNotFoundError } from '../errors/list_not_found_error';
 import { CreateTaskCommandInterface } from './create_task_command_interface';
 
 export class CreateTaskCommandHandler implements CommandHandlerInterface<CreateTaskCommandInterface, void> {
@@ -25,6 +25,7 @@ export class CreateTaskCommandHandler implements CommandHandlerInterface<CreateT
         list.addTask(
             this.idGenerator.generateId(),
             payload.label,
+            payload.description,
             payload.deadline,
         );
 

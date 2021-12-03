@@ -1,6 +1,10 @@
+import { MaxLengthError } from '../errors/max_length_error';
+import { RequiredError } from '../errors/required_error';
+
 export interface TaskPropsInterface {
     id: string,
     label: string,
+    description: string,
     finished: boolean,
     deadline: Date,
     listId: string
@@ -9,18 +13,21 @@ export interface TaskPropsInterface {
 export class Task {
     readonly id: string
 
-    label: string;
+    readonly listId: string;
 
-    finished: boolean;
+    readonly label: string;
 
-    deadline: Date;
+    readonly description: string;
 
-    listId: string;
+    readonly finished: boolean;
+
+    readonly deadline: Date;
 
     constructor(
         id: string,
         listId: string,
         label: string,
+        description: string,
         finished: boolean,
         deadline: Date,
 
@@ -28,8 +35,11 @@ export class Task {
         this.id = id;
         this.listId = listId;
         this.label = label;
+        this.description = description;
         this.finished = finished;
         this.deadline = deadline;
+
+        this.validate();
     }
 
     static create(props: TaskPropsInterface): Task {
@@ -37,18 +47,27 @@ export class Task {
             props.id,
             props.listId,
             props.label,
+            props.description,
             props.finished,
             props.deadline,
         );
     }
 
+    validate() {
+        if (this.label.length === 0) throw new RequiredError('List label');
+        if (this.label.length > 25) throw new MaxLengthError('List label', 25);
+        if (this.description.length === 0) throw new RequiredError('List label');
+        if (this.description.length > 150) throw new MaxLengthError('List label', 150);
+    }
+
     toPrimitive(): TaskPropsInterface {
         return {
             id: this.id,
+            listId: this.listId,
             label: this.label,
+            description: this.description,
             finished: this.finished,
             deadline: this.deadline,
-            listId: this.listId,
         };
     }
 }

@@ -7,6 +7,8 @@ import {
     CreateListCommandInterface,
 } from '../../core/components/todo/application/commands/create_list_command_interface';
 import { List } from '../../core/components/todo/domain/entities/list';
+import { MaxLengthError } from '../../core/components/todo/domain/errors/max_length_error';
+import { RequiredError } from '../../core/components/todo/domain/errors/required_error';
 import { IdGeneratorInterface } from '../../core/ports/persistence/id_generator_interface';
 import { ListRepositoryInterface } from '../../core/ports/persistence/list_repository_interface';
 import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
@@ -29,9 +31,9 @@ describe('I want to create a new List', () => {
     it('should create list with parameters', async () => {
         const payload: CreateListCommandInterface = {
             id: idGenerator.generateId(),
-            label: 'reminder',
+            label: 'My perfect list',
             tasks: [],
-            userId: '0000',
+            userId: 'uuid-user-1',
         };
 
         await createList.execute(payload);
@@ -46,16 +48,37 @@ describe('I want to create a new List', () => {
         });
     });
 
-    it('should throw validation errors', async () => {
+    it('should throw "max length" error', async () => {
         const payload: CreateListCommandInterface = {
             id: idGenerator.generateId(),
-            label: 'il faut que je pense à mettre moins de 25 caractères',
+            label: 'i have to think about writing less than 25 characters',
             tasks: [],
-            userId: '0000',
+            userId: 'uuid-user-1',
         };
 
         await expect(
             createList.execute(payload),
-        ).rejects.toThrowError('validation error');
+        ).rejects.toThrowError(MaxLengthError);
+
+        await expect(
+            createList.execute(payload),
+        ).rejects.toThrowError('List label must be less than 25 characters');
+    });
+
+    it('should throw "required" error', async () => {
+        const payload: CreateListCommandInterface = {
+            id: idGenerator.generateId(),
+            label: '',
+            tasks: [],
+            userId: 'uuid-user-1',
+        };
+
+        await expect(
+            createList.execute(payload),
+        ).rejects.toThrowError(RequiredError);
+
+        await expect(
+            createList.execute(payload),
+        ).rejects.toThrowError('List label is required');
     });
 });
