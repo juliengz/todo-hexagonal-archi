@@ -11,17 +11,13 @@ import {
 } from '../../core/components/todo/application/commands/create_task_command_interface';
 import { List } from '../../core/components/todo/domain/entities/list';
 import { ListNotFoundError } from '../../core/components/todo/domain/errors/list_not_found_error';
-import { IdGeneratorInterface } from '../../core/ports/persistence/id_generator_interface';
-import { ListRepositoryInterface } from '../../core/ports/persistence/list_repository_interface';
 import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 
 describe('I want to add a new Task to List', () => {
-    let listRepository: ListRepositoryInterface;
-    let idGenerator: IdGeneratorInterface;
+    let listRepository: ListRepository;
+    let idGenerator: UuidGeneratorStub;
     let createTask: CreateTaskCommandHandler;
-    let createList: CreateListCommandHandler;
-    let testList: List;
 
     beforeEach(async () => {
         listRepository = new ListRepository();
@@ -30,27 +26,29 @@ describe('I want to add a new Task to List', () => {
             listRepository,
             idGenerator,
         );
-        await listRepository.persist(List.create({
-            id: idGenerator.generateId(),
-            label: 'reminder',
-            tasks: [],
-            userId: '0000',
-        }));
-        testList = (await listRepository.findAll())[0];
     });
 
-    it('should add 5 task with parameters', async () => {
+    it('should add 1 task with parameters', async () => {
+        const list = new List(
+            'uuid-list-1',
+            'Fake name',
+            [],
+            'uuid-user-1',
+        );
+
+        listRepository.import([list]);
+
         const payload: CreateTaskCommandInterface = {
             id: idGenerator.generateId(),
-            listId: testList.id,
+            listId: list.id,
             label: 'My first task',
             deadline: new Date(),
         };
 
         await createTask.execute(payload);
 
-        expect(testList.tasks.length).toEqual(1);
-        expect(testList.tasks[0].label).toEqual('My first task');
+        expect(list.tasks.length).toEqual(1);
+        expect(list.tasks[0].label).toEqual('My first task');
     });
 
     it('should throw "list not found" error', async () => {

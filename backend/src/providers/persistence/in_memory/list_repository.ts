@@ -29,4 +29,8 @@ export class ListRepository implements ListRepositoryInterface {
     async exists(list: List): Promise<boolean> {
         return (await this.findById(list.id)) != null;
     }
+
+    import(lists: List[]): void {
+        this.lists = lists;
+    }
 }
