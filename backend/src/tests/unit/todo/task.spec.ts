@@ -1,6 +1,6 @@
 import { Task, TaskPropsInterface } from '../../../core/components/todo/domain/entities/task';
 
-describe('I instanciate a new Task class with create method', () => {
+describe('GIVEN I want to create a new Task with List create method', () => {
     const validParameters: TaskPropsInterface = {
         id: 'uuid-task-1',
         listId: 'uuid-list-1',
@@ -10,8 +10,8 @@ describe('I instanciate a new Task class with create method', () => {
         deadline: new Date(),
     };
 
-    describe('with valid parameters', () => {
-        it('then it add 1 task with parameters', async () => {
+    describe('WHEN parameters are valid', () => {
+        test('then it adds 1 task to task List owner', async () => {
             expect(
                 Task.create(validParameters),
             ).toEqual({
@@ -25,8 +25,8 @@ describe('I instanciate a new Task class with create method', () => {
         });
     });
 
-    describe('Parameters are invalid', () => {
-        it('should throw "max length" error for "label" attribute', () => {
+    describe('WHEN parameters are invalid', () => {
+        test('THEN it throws "max length" error if "label" is too long', () => {
             const invalidParameters = {
                 ...validParameters,
                 ...{ label: 'I have to think about writing less than 25 characters' },
@@ -37,7 +37,7 @@ describe('I instanciate a new Task class with create method', () => {
             ).toThrowError('Task label must be less than 25 characters');
         });
 
-        it('should throw "required" error for "label" attribute', () => {
+        test('THEN it throws "required" error if "label" is empty', () => {
             const invalidParameters = {
                 ...validParameters,
                 ...{ label: '' },
@@ -48,7 +48,7 @@ describe('I instanciate a new Task class with create method', () => {
             ).toThrowError('Task label is required');
         });
 
-        it('should throw "max length" error for "description" attribute', () => {
+        test('THEN it throws "max length" error if "description" is too long', () => {
             const invalidParameters = {
                 ...validParameters,
                 ...{ description: 'x'.repeat(151) },
@@ -59,7 +59,7 @@ describe('I instanciate a new Task class with create method', () => {
             ).toThrowError('Task description must be less than 150 characters');
         });
 
-        it('should throw "required" error for "description" attribute', () => {
+        test('THEN it throws "required" error if "description" is empty', () => {
             const invalidParameters = {
                 ...validParameters,
                 ...{ description: '' },

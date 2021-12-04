@@ -18,7 +18,7 @@ export class List {
 
     readonly userId: string
 
-    constructor(
+    private constructor(
         id: string,
         label: string,
         tasks: Task[],

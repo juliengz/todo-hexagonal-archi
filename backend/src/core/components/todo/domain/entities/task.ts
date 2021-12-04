@@ -23,7 +23,7 @@ export class Task {
 
     readonly deadline: Date;
 
-    constructor(
+    private constructor(
         id: string,
         listId: string,
         label: string,

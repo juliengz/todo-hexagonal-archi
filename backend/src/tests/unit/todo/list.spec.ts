@@ -1,15 +1,17 @@
-import { List } from '../../../core/components/todo/domain/entities/list';
+import { List, ListPropsInterface } from '../../../core/components/todo/domain/entities/list';
 
-describe('I want to instanciate a new List class with create method', () => {
-    describe('Parameters are valid', () => {
-        it('should add 1 task with parameters', async () => {
+describe('GIVEN I want to create a new List with List create method', () => {
+    const validParameters: ListPropsInterface = {
+        id: 'uuid-list-1',
+        label: 'Owner list',
+        tasks: [],
+        userId: 'uuid-user-1',
+    };
+
+    describe('WHEN parameters are valid', () => {
+        test('THEN it creates the List', async () => {
             expect(
-                List.create({
-                    id: 'uuid-list-1',
-                    label: 'Owner list',
-                    tasks: [],
-                    userId: 'uuid-user-1',
-                }),
+                List.create(validParameters),
             ).toEqual({
                 id: 'uuid-list-1',
                 label: 'Owner list',
@@ -19,26 +21,26 @@ describe('I want to instanciate a new List class with create method', () => {
         });
     });
 
-    describe('Parameters are invalid', () => {
-        it('should throw "max length" error for "label" attribute', () => {
+    describe('WHEN parameters are invalid', () => {
+        test('THEN it throws "max length" error if label is too long', () => {
+            const invalidParameters = {
+                ...validParameters,
+                ...{ label: 'x'.repeat(26) },
+            };
+
             expect(
-                () => List.create({
-                    id: 'uuid-list-1',
-                    label: 'I have to think about writing less than 25 characters',
-                    tasks: [],
-                    userId: 'uuid-user-1',
-                }),
+                () => List.create(invalidParameters),
             ).toThrowError('List label must be less than 25 characters');
         });
 
-        it('should throw "required" error for "label" attribute', () => {
+        test('THEN it throws "required" error if label empty', () => {
+            const invalidParameters = {
+                ...validParameters,
+                ...{ label: '' },
+            };
+
             expect(
-                () => List.create({
-                    id: 'uuid-list-1',
-                    label: '',
-                    tasks: [],
-                    userId: 'uuid-user-1',
-                }),
+                () => List.create(invalidParameters),
             ).toThrowError('List label is required');
         });
     });

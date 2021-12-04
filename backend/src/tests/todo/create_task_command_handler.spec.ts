@@ -12,17 +12,17 @@ import { List } from '../../core/components/todo/domain/entities/list';
 import { expectedId, UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 
-describe('I want to add a new Task to a List', () => {
+describe('GIVEN i want to add a new Task to a given List', () => {
     let listRepository: ListRepository;
     let idGenerator: UuidGeneratorStub;
     let createTask: CreateTaskCommandHandler;
 
-    const taskOwnerList = new List(
-        'uuid-list-1',
-        'Owner list',
-        [],
-        'uuid-user-1',
-    );
+    const taskOwnerList: List = List.create({
+        id: 'uuid-list-1',
+        label: 'Owner list',
+        tasks: [],
+        userId: 'uuid-user-1',
+    });
 
     beforeEach(async () => {
         listRepository = new ListRepository();
@@ -32,8 +32,8 @@ describe('I want to add a new Task to a List', () => {
             idGenerator,
         );
     });
-    describe('And the provided parameters are valid', () => {
-        it('should add 1 task with parameters', async () => {
+    describe('WHEN parameters are valid', () => {
+        test('THEN it adds Task to the given List', async () => {
             listRepository.import([taskOwnerList]);
 
             const payload: CreateTaskCommandInterface = {
@@ -59,10 +59,9 @@ describe('I want to add a new Task to a List', () => {
             expect(taskOwnerList.tasks[0]).toEqual(expectedTask);
         });
     });
-    
 
-    describe('And the provided task owner list does not exist', () => {
-        it('should throw "list not found" error', async () => {
+    describe('WHEN the provided task list owner does not exist', () => {
+        it('THEN it throws "list not found" error', async () => {
             const payload: CreateTaskCommandInterface = {
                 id: idGenerator.generateId(),
                 listId: 'uuid-not-found',
@@ -73,7 +72,7 @@ describe('I want to add a new Task to a List', () => {
 
             await expect(
                 createTask.execute(payload),
-            ).rejects.toThrow(ListNotFoundError);
+            ).rejects.toThrowError('List not found');
         });
     });
 });
