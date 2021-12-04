@@ -5,7 +5,7 @@ describe('GIVEN I want to create a new List with List create method', () => {
         id: 'uuid-list-1',
         label: 'Owner list',
         tasks: [],
-        userId: 'uuid-user-1',
+        listUserId: 'uuid-user-1',
     };
 
     describe('WHEN parameters are valid', () => {
@@ -16,7 +16,7 @@ describe('GIVEN I want to create a new List with List create method', () => {
                 id: 'uuid-list-1',
                 label: 'Owner list',
                 tasks: [],
-                userId: 'uuid-user-1',
+                listUserId: 'uuid-user-1',
             });
         });
     });

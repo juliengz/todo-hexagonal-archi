@@ -6,7 +6,7 @@ export interface ListPropsInterface {
     id: string
     label: string
     tasks: Task[];
-    userId: string;
+    listUserId: string;
 }
 
 export class List {
@@ -16,18 +16,18 @@ export class List {
 
     readonly tasks: Task[];
 
-    readonly userId: string
+    readonly listUserId: string
 
     private constructor(
         id: string,
         label: string,
         tasks: Task[],
-        userId: string,
+        listUserId: string,
     ) {
         this.id = id;
         this.label = label;
         this.tasks = tasks;
-        this.userId = userId;
+        this.listUserId = listUserId;
 
         this.validate();
     }
@@ -37,7 +37,7 @@ export class List {
             props.id,
             props.label,
             props.tasks,
-            props.userId,
+            props.listUserId,
         );
     }
 

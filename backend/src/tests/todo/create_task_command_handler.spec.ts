@@ -21,7 +21,7 @@ describe('GIVEN i want to add a new Task to a given List', () => {
         id: 'uuid-list-1',
         label: 'Owner list',
         tasks: [],
-        userId: 'uuid-user-1',
+        listUserId: 'uuid-user-1',
     });
 
     beforeEach(async () => {

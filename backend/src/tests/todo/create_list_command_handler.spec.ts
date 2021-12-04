@@ -2,20 +2,19 @@ import { CreateListCommandHandler } from '../../core/components/todo/application
 import {
     CreateListCommandInterface,
 } from '../../core/components/todo/application/commands/create_list_command_interface';
-import { List } from '../../core/components/todo/domain/entities/list';
-import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
-import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
+import { UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
+import { ListUserRepository } from '../../providers/persistence/in_memory/list_user_repository';
 
 describe('GIVEN i want to create a new List', () => {
-    let listRepository: ListRepository;
+    let listUserRepository: ListUserRepository;
     let idGenerator: UuidGeneratorStub;
     let createList: CreateListCommandHandler;
 
     beforeEach(() => {
-        listRepository = new ListRepository();
+        listUserRepository = new ListUserRepository();
         idGenerator = new UuidGeneratorStub();
         createList = new CreateListCommandHandler(
-            listRepository,
+            listUserRepository,
             idGenerator,
         );
     });
@@ -25,20 +24,14 @@ describe('GIVEN i want to create a new List', () => {
             const payload: CreateListCommandInterface = {
                 id: idGenerator.generateId(),
                 label: 'My perfect list',
-                tasks: [],
                 userId: 'uuid-user-1',
             };
 
             await createList.execute(payload);
 
-            const lists: List[] = await listRepository.findAll();
+            const listUser = await listUserRepository.findById('uuid-user-1');
 
-            expect(lists[0]).toEqual({
-                id: expectedId,
-                label: payload.label,
-                tasks: payload.tasks,
-                userId: payload.userId,
-            });
+            expect(listUser?.lists.length).toEqual(1);
         });
     });
 });

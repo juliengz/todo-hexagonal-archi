@@ -40,7 +40,7 @@ describe('I want to register a new user', () => {
 
         const users = await userRepository.findAll();
 
-        expect(users[0].toPrimitives()).toEqual({
+        expect(users[0]).toEqual({
             id: expectedId,
             login: payload.login,
             cryptedPassword: payload.password,
