@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 
-import { User } from '../../../core/components/authentication/domain/entities/user';
-import { UserRepositoryInterface } from '../../../core/ports/persistence/user_repository_interface';
+import { User } from '../../../core/authentication/domain/entities/user';
+import {
+    UserRepositoryInterface,
+} from '../../../core/authentication/ports/persistence/user_repository_interface';
 
 export class UserRepository implements UserRepositoryInterface {
     private users: User[];

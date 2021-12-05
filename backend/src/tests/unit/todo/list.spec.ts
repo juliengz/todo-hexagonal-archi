@@ -1,4 +1,4 @@
-import { List, ListPropsInterface } from '../../../core/components/todo/domain/entities/list';
+import { List, ListPropsInterface } from '../../../core/todo/domain/entities/list';
 
 describe('GIVEN I want to create a new List with List create method', () => {
     const validParameters: ListPropsInterface = {

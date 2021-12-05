@@ -1,4 +1,4 @@
-import { Task, TaskPropsInterface } from '../../../core/components/todo/domain/entities/task';
+import { Task, TaskPropsInterface } from '../../../core/todo/domain/entities/task';
 
 describe('GIVEN I want to create a new Task with List create method', () => {
     const validParameters: TaskPropsInterface = {

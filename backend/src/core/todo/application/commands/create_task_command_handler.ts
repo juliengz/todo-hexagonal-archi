@@ -1,6 +1,6 @@
-import { IdGeneratorInterface } from '../../../../ports/persistence/id_generator_interface';
-import { ListRepositoryInterface } from '../../../../ports/persistence/list_repository_interface';
-import { CommandHandlerInterface } from '../../../../shared_kernel/command/command_handler_interface';
+import { CommandHandlerInterface } from '../../../shared_kernel/command/command_handler_interface';
+import { IdGeneratorInterface } from '../../../shared_kernel/services/id_generator_interface';
+import { ListRepositoryInterface } from '../../ports/repositories/list_repository_interface';
 import { ListNotFoundError } from '../errors/list_not_found_error';
 import { CreateTaskCommandInterface } from './create_task_command_interface';
 

@@ -3,12 +3,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 
-import { CreateTaskCommandHandler } from '../../core/components/todo/application/commands/create_task_command_handler';
+import { CreateTaskCommandHandler } from '../../core/todo/application/commands/create_task_command_handler';
 import {
     CreateTaskCommandInterface,
-} from '../../core/components/todo/application/commands/create_task_command_interface';
-import { ListNotFoundError } from '../../core/components/todo/application/errors/list_not_found_error';
-import { List } from '../../core/components/todo/domain/entities/list';
+} from '../../core/todo/application/commands/create_task_command_interface';
+import { List } from '../../core/todo/domain/entities/list';
 import { expectedId, UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
 

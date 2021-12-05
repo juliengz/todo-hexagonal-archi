@@ -4,10 +4,12 @@
 
 import {
     RegisterUserCommandHandler,
-} from '../../core/components/authentication/application/commands/register_user_command_handler';
-import { HasherInterface } from '../../core/ports/hashers/hasher_interface';
-import { IdGeneratorInterface } from '../../core/ports/persistence/id_generator_interface';
-import { UserRepositoryInterface } from '../../core/ports/persistence/user_repository_interface';
+} from '../../core/authentication/application/commands/register_user_command_handler';
+import { HasherInterface } from '../../core/authentication/ports/hashers/hasher_interface';
+import {
+    UserRepositoryInterface,
+} from '../../core/authentication/ports/persistence/user_repository_interface';
+import { IdGeneratorInterface } from '../../core/shared_kernel/services/id_generator_interface';
 import PasswordHasherStub from '../../providers/hashers/password_hasher_stub';
 import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { UserRepository } from '../../providers/persistence/in_memory/user_repository';

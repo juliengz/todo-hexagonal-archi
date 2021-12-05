@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 
-import { ListUser } from '../../../core/components/todo/domain/entities/list_user';
-import { ListUserRepositoryInterface } from '../../../core/ports/persistence/list_user_repository_interface';
+import { ListUser } from '../../../core/todo/domain/entities/list_user';
+import {
+    ListUserRepositoryInterface,
+} from '../../../core/todo/ports/repositories/list_user_repository_interface';
 
 export class ListUserRepository implements ListUserRepositoryInterface {
     private listUsers: ListUser[];

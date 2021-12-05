@@ -1,4 +1,4 @@
-import { User, UserPropsInterface } from '../../../core/components/authentication/domain/entities/user';
+import { User, UserPropsInterface } from '../../../core/authentication/domain/entities/user';
 
 describe('GIVEN I want to create a new User with User create method', () => {
     const validParameters: UserPropsInterface = {

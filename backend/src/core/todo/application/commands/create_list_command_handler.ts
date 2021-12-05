@@ -1,7 +1,7 @@
-import { IdGeneratorInterface } from '../../../../ports/persistence/id_generator_interface';
-import { ListUserRepositoryInterface } from '../../../../ports/persistence/list_user_repository_interface';
-import { CommandHandlerInterface } from '../../../../shared_kernel/command/command_handler_interface';
+import { CommandHandlerInterface } from '../../../shared_kernel/command/command_handler_interface';
+import { IdGeneratorInterface } from '../../../shared_kernel/services/id_generator_interface';
 import { ListUser } from '../../domain/entities/list_user';
+import { ListUserRepositoryInterface } from '../../ports/repositories/list_user_repository_interface';
 import { CreateListCommandInterface } from './create_list_command_interface';
 
 export class CreateListCommandHandler implements CommandHandlerInterface<CreateListCommandInterface, void> {

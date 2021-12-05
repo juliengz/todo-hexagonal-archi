@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { HasherInterface } from '../../core/ports/hashers/hasher_interface';
+import { HasherInterface } from '../../core/authentication/ports/hashers/hasher_interface';
 
 export default class PasswordHasherStub implements HasherInterface {
     hash(plainValue: string): string {
