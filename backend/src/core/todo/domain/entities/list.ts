@@ -1,10 +1,9 @@
-import { MaxLengthError } from '../errors/max_length_error';
-import { RequiredError } from '../errors/required_error';
+import { ListLabel } from '../value_objects/list_label';
 import { Task } from './task';
 
 export interface ListPropsInterface {
     id: string
-    label: string
+    label: ListLabel
     tasks: Task[];
     listUserId: string;
 }
@@ -12,7 +11,7 @@ export interface ListPropsInterface {
 export class List {
     readonly id: string
 
-    readonly label: string
+    readonly label: ListLabel
 
     readonly tasks: Task[];
 
@@ -20,7 +19,7 @@ export class List {
 
     private constructor(
         id: string,
-        label: string,
+        label: ListLabel,
         tasks: Task[],
         listUserId: string,
     ) {
@@ -28,8 +27,6 @@ export class List {
         this.label = label;
         this.tasks = tasks;
         this.listUserId = listUserId;
-
-        this.validate();
     }
 
     static create(props: ListPropsInterface): List {
@@ -39,11 +36,6 @@ export class List {
             props.tasks,
             props.listUserId,
         );
-    }
-
-    validate() {
-        if (this.label.length === 0) throw new RequiredError('List label');
-        if (this.label.length > 25) throw new MaxLengthError('List label', 25);
     }
 
     addTask(

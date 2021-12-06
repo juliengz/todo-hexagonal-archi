@@ -1,3 +1,4 @@
+import { ListLabel } from '../value_objects/list_label';
 import { List } from './list';
 
 export interface ListUserPropsInterface {
@@ -20,7 +21,7 @@ export class ListUser {
 
     addList(
         id: string,
-        label: string,
+        label: ListLabel,
     ) {
         const list = List.create({
             id,

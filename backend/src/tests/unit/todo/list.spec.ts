@@ -1,9 +1,12 @@
 import { List, ListPropsInterface } from '../../../core/todo/domain/entities/list';
+import { ListLabel } from '../../../core/todo/domain/value_objects/list_label';
 
 describe('GIVEN I want to create a new List with List create method', () => {
+    const labelVo = ListLabel.create({ value: 'owner list' });
+
     const validParameters: ListPropsInterface = {
         id: 'uuid-list-1',
-        label: 'Owner list',
+        label: labelVo.value,
         tasks: [],
         listUserId: 'uuid-user-1',
     };
