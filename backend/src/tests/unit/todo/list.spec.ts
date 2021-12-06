@@ -1,4 +1,5 @@
-import { List, ListPropsInterface } from '../../../core/todo/domain/entities/list';
+import { err, ok } from 'neverthrow';
+import { List, ListPropsInterface } from '../../../core/todo/domain/list';
 
 describe('GIVEN I want to create a new List with List create method', () => {
     const validParameters: ListPropsInterface = {
@@ -10,14 +11,16 @@ describe('GIVEN I want to create a new List with List create method', () => {
 
     describe('WHEN parameters are valid', () => {
         test('THEN it creates the List', async () => {
-            expect(
-                List.create(validParameters),
-            ).toEqual({
-                id: 'uuid-list-1',
-                label: 'Owner list',
-                tasks: [],
-                listUserId: 'uuid-user-1',
-            });
+            const result = List.create(validParameters);
+
+            expect(result).toEqual(
+                ok({
+                    id: 'uuid-list-1',
+                    label: 'Owner list',
+                    tasks: [],
+                    listUserId: 'uuid-user-1',
+                }),
+            );
         });
     });
 
@@ -28,9 +31,11 @@ describe('GIVEN I want to create a new List with List create method', () => {
                 ...{ label: 'x'.repeat(26) },
             };
 
-            expect(
-                () => List.create(invalidParameters),
-            ).toThrowError('List label must be less than 25 characters');
+            const result = List.create(invalidParameters);
+
+            expect(result).toEqual(
+                err({ label: ['label must have more than 25 characters'] }),
+            );
         });
 
         test('THEN it throws "required" error if label empty', () => {
@@ -39,9 +44,11 @@ describe('GIVEN I want to create a new List with List create method', () => {
                 ...{ label: '' },
             };
 
-            expect(
-                () => List.create(invalidParameters),
-            ).toThrowError('List label is required');
+            const result = List.create(invalidParameters);
+
+            expect(result).toEqual(
+                err({ label: ['label is required'] }),
+            );
         });
     });
 });

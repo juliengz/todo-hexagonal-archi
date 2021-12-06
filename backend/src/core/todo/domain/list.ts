@@ -1,5 +1,7 @@
-import { MaxLengthError } from '../errors/max_length_error';
-import { RequiredError } from '../errors/required_error';
+import { err, ok, Result } from 'neverthrow';
+import { Notification } from '../../shared_kernel/validation/notification';
+import { MaxLengthError } from './errors/max_length_error';
+import { RequiredError } from './errors/required_error';
 import { Task } from './task';
 
 export interface ListPropsInterface {
@@ -29,19 +31,28 @@ export class List {
         this.tasks = tasks;
         this.listUserId = listUserId;
 
-        this.validate();
+        // this.validate();
     }
 
-    static create(props: ListPropsInterface): List {
-        return new List(
+    static create(props: ListPropsInterface): Result<List, {}> {
+        const notification: Notification = new Notification();
+
+        if (props.label.length === 0) notification.addError('label', 'label is required');
+        if (props.label.length > 25) notification.addError('label', 'label must have more than 25 characters');
+
+        if (notification.hasErrors()) {
+            return err(notification.getErrors()!);
+        }
+
+        return ok(new List(
             props.id,
             props.label,
             props.tasks,
             props.listUserId,
-        );
+        ));
     }
 
-    validate() {
+    public validate() {
         if (this.label.length === 0) throw new RequiredError('List label');
         if (this.label.length > 25) throw new MaxLengthError('List label', 25);
     }

@@ -1,5 +1,5 @@
-import { MaxLengthError } from '../errors/max_length_error';
-import { RequiredError } from '../errors/required_error';
+import { MaxLengthError } from './errors/max_length_error';
+import { RequiredError } from './errors/required_error';
 
 export interface TaskPropsInterface {
     id: string,

@@ -1,4 +1,4 @@
-import { Validator } from '../../../shared_kernel/validation/validator';
+import { Validator } from '../../../shared_kernel/validation/notification';
 import { ValidatorInterface } from '../../../shared_kernel/validation/validator_interface';
 import { CreateListCommandInterface } from '../commands/create_list_command_interface';
 
