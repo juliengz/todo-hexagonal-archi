@@ -1,6 +1,6 @@
 import { err, ok, Result } from 'neverthrow';
-import { Guard } from '../../../shared_kernel/guard';
-import { ValueObject } from '../../../shared_kernel/value_object';
+import { Guard } from '../../../common/guard';
+import { ValueObject } from '../../../common/value_object';
 
 interface ListLabelProps {
     value: string;

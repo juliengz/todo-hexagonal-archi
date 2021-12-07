@@ -1,5 +1,5 @@
-import { CommandHandlerInterface } from '../../../shared_kernel/command/command_handler_interface';
-import { IdGeneratorInterface } from '../../../shared_kernel/services/id_generator_interface';
+import { CommandHandlerInterface } from '../../../common/command/command_handler_interface';
+import { IdGeneratorInterface } from '../../../common/services/id_generator_interface';
 import { ListUser } from '../../domain/entities/list_user';
 import { ListLabel } from '../../domain/value_objects/list_label';
 import { ListUserRepositoryInterface } from '../../ports/repositories/list_user_repository_interface';

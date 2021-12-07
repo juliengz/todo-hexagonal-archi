@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 
-import { IdGeneratorInterface } from '../../../core/shared_kernel/services/id_generator_interface';
+import { IdGeneratorInterface } from '../../../core/common/services/id_generator_interface';
 
 export const expectedId = '0000000-0000-0000-0000-000000000000';
 
