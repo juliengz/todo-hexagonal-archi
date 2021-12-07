@@ -1,5 +1,5 @@
-import { Validator } from '../../../shared_kernel/validation/validator';
-import { ValidatorInterface } from '../../../shared_kernel/validation/validator_interface';
+import { Validator } from '../../../common/validation/validator';
+import { ValidatorInterface } from '../../../common/validation/validator_interface';
 import { CreateListCommandInterface } from '../commands/create_list_command_interface';
 
 export class CreateListValidator extends Validator implements ValidatorInterface {
