@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { ListUser } from '../../../core/todo/domain/entities/list_user';
+import { ListUser } from '../../../core/todo/domain/list_user';
 import {
     ListUserRepositoryInterface,
 } from '../../../core/todo/ports/repositories/list_user_repository_interface';

@@ -1,5 +1,4 @@
-import { MaxLengthError } from '../errors/max_length_error';
-import { RequiredError } from '../errors/required_error';
+import { InvalidArgument } from "./errors/invalid_argument";
 
 export interface TaskPropsInterface {
     id: string,
@@ -54,9 +53,9 @@ export class Task {
     }
 
     validate() {
-        if (this.label.length === 0) throw new RequiredError('Task label');
-        if (this.label.length > 25) throw new MaxLengthError('Task label', 25);
-        if (this.description.length === 0) throw new RequiredError('Task description');
-        if (this.description.length > 150) throw new MaxLengthError('Task description', 150);
+        if (this.label.length === 0) throw new InvalidArgument('Task label');
+        if (this.label.length > 25) throw new InvalidArgument('Task label');
+        if (this.description.length === 0) throw new InvalidArgument('Task description');
+        if (this.description.length > 150) throw new InvalidArgument('Task description');
     }
 }

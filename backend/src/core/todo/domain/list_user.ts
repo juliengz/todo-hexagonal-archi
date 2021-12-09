@@ -1,5 +1,5 @@
-import { ListLabel } from '../value_objects/list_label';
 import { List } from './list';
+import { ListLabel } from './list_label';
 
 export interface ListUserPropsInterface {
     id: string

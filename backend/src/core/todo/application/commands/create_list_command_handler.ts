@@ -1,7 +1,7 @@
 import { CommandHandlerInterface } from '../../../common/command/command_handler_interface';
 import { IdGeneratorInterface } from '../../../common/services/id_generator_interface';
-import { ListUser } from '../../domain/entities/list_user';
-import { ListLabel } from '../../domain/value_objects/list_label';
+import { ListLabel } from '../../domain/list_label';
+import { ListUser } from '../../domain/list_user';
 import { ListUserRepositoryInterface } from '../../ports/repositories/list_user_repository_interface';
 import { CreateListCommandInterface } from './create_list_command_interface';
 
@@ -26,12 +26,10 @@ export class CreateListCommandHandler implements CommandHandlerInterface<CreateL
             listUser = new ListUser(payload.userId, []);
         }
 
-        if (label.isOk()) {
-            listUser.addList(
-                this.idGenerator.generateId(),
-                label.value,
-            );
-        }
+        listUser.addList(
+            this.idGenerator.generateId(),
+            label.value,
+        );
 
         await this.listUserRepository.persist(listUser);
     }

@@ -1,6 +1,6 @@
-import { err, ok, Result } from 'neverthrow';
-import { Guard } from '../../../common/guard';
-import { ValueObject } from '../../../common/value_object';
+import { ValueObject } from '../../common/domain/value_object';
+import { Guard } from '../../common/validation/guard';
+import { InvalidArgument } from './errors/invalid_argument';
 
 interface ListLabelProps {
     value: string;
@@ -19,24 +19,25 @@ export class ListLabel extends ValueObject<ListLabelProps> {
         super(props);
     }
 
-    public static create(props: ListLabelProps): Result<ListLabel, string> {
+    public static create(props: ListLabelProps): ListLabel {
         const nullGuardResult = Guard.againstNullOrUndefined(props.value, 'listlabel');
 
         if (!nullGuardResult.succeeded) {
-            return err(nullGuardResult.message!);
+            throw new InvalidArgument(nullGuardResult.message!);
         }
 
         const minGuardResult = Guard.againstAtLeast(this.minLength, props.value);
-        const maxGuardResult = Guard.againstAtMost(this.maxLength, props.value);
 
         if (!minGuardResult.succeeded) {
-            return err(minGuardResult.message!);
+            throw new InvalidArgument(minGuardResult.message!);
         }
+
+        const maxGuardResult = Guard.againstAtMost(this.maxLength, props.value);
 
         if (!maxGuardResult.succeeded) {
-            return err(maxGuardResult.message!);
+            throw new InvalidArgument(maxGuardResult.message!);
         }
 
-        return ok(new ListLabel(props));
+        return new ListLabel(props);
     }
 }
