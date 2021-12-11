@@ -1,42 +1,26 @@
+import { Entity } from '../../common/domain/entity';
 import { Identifier } from '../../common/domain/indentifier';
 import { ListLabel } from './list_label';
 import { Task } from './task';
 
 export interface ListPropsInterface {
-    id: Identifier<string>
     label: ListLabel
     tasks: Task[];
     listUserId: Identifier<string>;
 }
 
-export class List {
-    readonly id: Identifier<string>
-
-    readonly label: ListLabel
-
-    readonly tasks: Task[];
-
-    readonly listUserId: Identifier<string>
-
-    private constructor(
-        id: Identifier<string>,
-        label: ListLabel,
-        tasks: Task[],
-        listUserId: Identifier<string>,
-    ) {
-        this.id = id;
-        this.label = label;
-        this.tasks = tasks;
-        this.listUserId = listUserId;
+export class List extends Entity<ListPropsInterface> {
+    private constructor(props: ListPropsInterface, id: string) {
+        super(props, id);
     }
 
-    static create(props: ListPropsInterface): List {
-        return new List(
-            props.id,
-            props.label,
-            props.tasks,
-            props.listUserId,
-        );
+    static create(props: ListPropsInterface, id: string): List {
+        const defaultListProps: ListPropsInterface = {
+            ...props,
+            tasks: [],
+        };
+
+        return new List(defaultListProps, id);
     }
 
     // addTask(

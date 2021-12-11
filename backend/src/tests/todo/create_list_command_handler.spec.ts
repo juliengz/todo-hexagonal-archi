@@ -1,7 +1,7 @@
-import { CreateListCommandHandler } from '../../core/todo/application/commands/create_list_command_handler';
+import { CreateListCommandHandler } from '../../core/todo/commands/create_list_command_handler';
 import {
     CreateListCommandInterface,
-} from '../../core/todo/application/commands/create_list_command_interface';
+} from '../../core/todo/commands/create_list_command_interface';
 import { UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListUserRepository } from '../../providers/persistence/in_memory/list_user_repository';
 

@@ -3,10 +3,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 
-import { CreateTaskCommandHandler } from '../../core/todo/application/commands/create_task_command_handler';
+import { CreateTaskCommandHandler } from '../../core/todo/commands/create_task_command_handler';
 import {
     CreateTaskCommandInterface,
-} from '../../core/todo/application/commands/create_task_command_interface';
+} from '../../core/todo/commands/create_task_command_interface';
 import { List } from '../../core/todo/domain/entities/list';
 import { expectedId, UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
 import { ListRepository } from '../../providers/persistence/in_memory/list_repository';

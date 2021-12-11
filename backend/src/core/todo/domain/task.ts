@@ -1,61 +1,20 @@
-import { InvalidArgument } from "./errors/invalid_argument";
+import { Entity } from '../../common/domain/entity';
+import { Identifier } from '../../common/domain/indentifier';
+import { TaskDescription } from './task_description';
+import { TaskLabel } from './task_label';
 
 export interface TaskPropsInterface {
-    id: string,
-    label: string,
-    description: string,
-    finished: boolean,
-    deadline: Date,
-    listId: string
+    label: TaskLabel,
+    description: TaskDescription,
+    parentTaskId: Identifier<string>,
 }
 
-export class Task {
-    readonly id: string
-
-    readonly listId: string;
-
-    readonly label: string;
-
-    readonly description: string;
-
-    readonly finished: boolean;
-
-    readonly deadline: Date;
-
-    private constructor(
-        id: string,
-        listId: string,
-        label: string,
-        description: string,
-        finished: boolean,
-        deadline: Date,
-
-    ) {
-        this.id = id;
-        this.listId = listId;
-        this.label = label;
-        this.description = description;
-        this.finished = finished;
-        this.deadline = deadline;
-
-        this.validate();
+export class Task extends Entity<TaskPropsInterface> {
+    private constructor(props: TaskPropsInterface, id: string) {
+        super(props, id);
     }
 
-    static create(props: TaskPropsInterface): Task {
-        return new Task(
-            props.id,
-            props.listId,
-            props.label,
-            props.description,
-            props.finished,
-            props.deadline,
-        );
-    }
-
-    validate() {
-        if (this.label.length === 0) throw new InvalidArgument('Task label');
-        if (this.label.length > 25) throw new InvalidArgument('Task label');
-        if (this.description.length === 0) throw new InvalidArgument('Task description');
-        if (this.description.length > 150) throw new InvalidArgument('Task description');
+    static create(props: TaskPropsInterface, id: string): Task {
+        return new Task(props, id);
     }
 }

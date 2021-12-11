@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import { Task } from '../../../core/todo/domain/entities/task';
-import { TaskRepositoryInterface } from '../../../core/todo/ports/repositories/task_repository_interface';
+import { Task } from '../../../core/todo/domain/task';
+import { TaskRepositoryInterface } from '../../../core/todo/repositories/task_repository_interface';
 
 export class TaskRepository implements TaskRepositoryInterface {
     private tasks: Task[];

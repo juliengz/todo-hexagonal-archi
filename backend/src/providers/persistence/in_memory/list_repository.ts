@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import { List } from '../../../core/todo/domain/entities/list';
-import { ListRepositoryInterface } from '../../../core/todo/ports/repositories/list_repository_interface';
+import { List } from '../../../core/todo/domain/list';
+import { ListRepositoryInterface } from '../../../core/todo/repositories/list_repository_interface';
 
 export class ListRepository implements ListRepositoryInterface {
     private lists: List[];
