@@ -14,6 +14,18 @@ export class List extends Entity<ListPropsInterface> {
         super(props, id);
     }
 
+    get label(): ListLabel {
+        return this.props.label;
+    }
+
+    get ownerId(): OwnerId {
+        return this.props.ownerId;
+    }
+
+    get tasks(): Task[] {
+        return this.tasks;
+    }
+
     static create(props: ListPropsInterface, id: string): List {
         const defaultListProps: ListPropsInterface = {
             ...props,
