@@ -1,12 +1,12 @@
-import { Identifier } from '../../../core/common/domain/indentifier';
-import { List, ListPropsInterface } from '../../../core/todo/domain/list';
-import { ListLabel } from '../../../core/todo/domain/list_label';
+import { List, ListPropsInterface } from '../../core/todo/domain/list';
+import { ListLabel } from '../../core/todo/domain/list_label';
+import { OwnerId } from '../../core/todo/domain/owner_id';
 
 describe('GIVEN I want to create a new List with List create method', () => {
     const validProps: ListPropsInterface = {
         label: ListLabel.create({ value: 'owner list' }),
         tasks: [],
-        listUserId: new Identifier('uuid-user-1'),
+        ownerId: OwnerId.create({ value: 'uuid-user-1' }),
     };
 
     describe('WHEN parameters are valid', () => {
@@ -20,7 +20,7 @@ describe('GIVEN I want to create a new List with List create method', () => {
                 props: {
                     label: validProps.label,
                     tasks: validProps.tasks,
-                    listUserId: validProps.listUserId,
+                    listUserId: validProps.ownerId,
                 },
             });
         });

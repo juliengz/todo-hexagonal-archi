@@ -1,12 +1,14 @@
 import { Entity } from '../../common/domain/entity';
-import { Identifier } from '../../common/domain/indentifier';
+import { ListId } from './list_id';
 import { TaskDescription } from './task_description';
 import { TaskLabel } from './task_label';
 
 export interface TaskPropsInterface {
     label: TaskLabel,
     description: TaskDescription,
-    parentTaskId: Identifier<string>,
+    listId: ListId,
+    public: boolean,
+    deadline: Date|null|undefined
 }
 
 export class Task extends Entity<TaskPropsInterface> {

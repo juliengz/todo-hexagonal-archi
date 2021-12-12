@@ -1,12 +1,12 @@
 import { Entity } from '../../common/domain/entity';
-import { Identifier } from '../../common/domain/indentifier';
 import { ListLabel } from './list_label';
+import { OwnerId } from './owner_id';
 import { Task } from './task';
 
 export interface ListPropsInterface {
     label: ListLabel
     tasks: Task[];
-    listUserId: Identifier<string>;
+    ownerId: OwnerId;
 }
 
 export class List extends Entity<ListPropsInterface> {

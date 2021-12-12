@@ -3,8 +3,8 @@ import { Identifier } from '../../common/domain/indentifier';
 import { IdGeneratorInterface } from '../../common/services/id_generator_interface';
 import { List } from '../domain/list';
 import { ListLabel } from '../domain/list_label';
-import { ListUser } from '../domain/list_user';
-import { ListUserRepositoryInterface } from '../repositories/list_user_repository_interface';
+import { ListUser } from '../domain/owner';
+import { ListUserRepositoryInterface } from '../repositories/owner_repository_interface';
 import { CreateListCommandInterface } from './create_list_command_interface';
 
 export class CreateListCommandHandler implements CommandHandlerInterface<CreateListCommandInterface, void> {

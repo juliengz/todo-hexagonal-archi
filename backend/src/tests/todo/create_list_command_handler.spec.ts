@@ -3,7 +3,7 @@ import {
     CreateListCommandInterface,
 } from '../../core/todo/commands/create_list_command_interface';
 import { UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
-import { ListUserRepository } from '../../providers/persistence/in_memory/list_user_repository';
+import { ListUserRepository } from '../../providers/persistence/in_memory/owner_repository';
 
 describe('GIVEN i want to create a new List', () => {
     let listUserRepository: ListUserRepository;

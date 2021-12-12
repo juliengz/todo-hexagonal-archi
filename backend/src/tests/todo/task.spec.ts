@@ -1,13 +1,15 @@
-import { Identifier } from '../../../core/common/domain/indentifier';
-import { Task, TaskPropsInterface } from '../../../core/todo/domain/task';
-import { TaskDescription } from '../../../core/todo/domain/task_description';
-import { TaskLabel } from '../../../core/todo/domain/task_label';
+import { ListId } from '../../core/todo/domain/list_id';
+import { Task, TaskPropsInterface } from '../../core/todo/domain/task';
+import { TaskDescription } from '../../core/todo/domain/task_description';
+import { TaskLabel } from '../../core/todo/domain/task_label';
 
 describe('GIVEN I want to create a new Task with List create method', () => {
     const validProps: TaskPropsInterface = {
         label: TaskLabel.create({ value: 'My first task' }),
         description: TaskDescription.create({ value: 'My first task description' }),
-        parentTaskId: new Identifier('uuid-parent-task-1'),
+        listId: ListId.create({ value: 'uuid-parent-task-1' }),
+        public: false,
+        deadline: null,
     };
 
     describe('WHEN parameters are valid', () => {
@@ -19,7 +21,9 @@ describe('GIVEN I want to create a new Task with List create method', () => {
                 props: {
                     label: validProps.label,
                     description: validProps.description,
-                    parentTaskId: validProps.parentTaskId,
+                    parentTaskId: validProps.listId,
+                    public: validProps.public,
+                    deadline: validProps.deadline,
                 },
             });
         });
