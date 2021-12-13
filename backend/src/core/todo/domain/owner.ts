@@ -1,16 +1,22 @@
 import { Entity } from '../../common/domain/entity';
+import { Identifier } from '../../common/domain/indentifier';
 import { List } from './list';
+import { OwnerId } from './owner_id';
 
 export interface ListUserPropsInterface {
-    lists: List[]
+    lists?: List[]
 }
 
 export class Owner extends Entity<ListUserPropsInterface> {
-    private constructor(props: ListUserPropsInterface, id: string) {
+    private constructor(props: ListUserPropsInterface, id: Identifier<string>) {
         super(props, id);
     }
 
-    static create(props: ListUserPropsInterface, id: string): Owner {
+    get ownerId(): OwnerId {
+        return OwnerId.create(this.id.toValue());
+    }
+
+    static create(props: ListUserPropsInterface, id: Identifier<string>): Owner {
         const defaultListProps: ListUserPropsInterface = {
             ...props,
             lists: [],

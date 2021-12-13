@@ -2,6 +2,7 @@
 
 import { List } from '../../../core/todo/domain/list';
 import { ListRepositoryInterface } from '../../../core/todo/repositories/list_repository_interface';
+import { ListMap } from '../../mappers/list_map';
 
 export class ListRepository implements ListRepositoryInterface {
     private lists: List[];
@@ -11,7 +12,7 @@ export class ListRepository implements ListRepositoryInterface {
     }
 
     async persist(list: List): Promise<void> {
-        this.lists.push(list);
+        this.lists.push(ListMap.toPersistence(list));
 
         return Promise.resolve();
     }

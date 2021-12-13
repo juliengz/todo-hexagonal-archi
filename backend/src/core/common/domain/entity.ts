@@ -8,8 +8,8 @@ export abstract class Entity<T> {
 
   public readonly props: T;
 
-  constructor(props: T, id: string) {
-      this.id = new Identifier(id);
+  constructor(props: T, id: Identifier<string>) {
+      this.id = id;
       this.props = props;
   }
 

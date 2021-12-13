@@ -1,13 +1,14 @@
 import { ListId } from '../../core/todo/domain/list_id';
 import { Task, TaskPropsInterface } from '../../core/todo/domain/task';
 import { TaskDescription } from '../../core/todo/domain/task_description';
+import { TaskId } from '../../core/todo/domain/task_id';
 import { TaskLabel } from '../../core/todo/domain/task_label';
 
 describe('GIVEN I want to create a new Task with List create method', () => {
     const validProps: TaskPropsInterface = {
         label: TaskLabel.create({ value: 'My first task' }),
         description: TaskDescription.create({ value: 'My first task description' }),
-        listId: ListId.create({ value: 'uuid-parent-task-1' }),
+        listId: ListId.create('uuid-parent-task-1'),
         public: false,
         deadline: null,
     };
@@ -15,13 +16,13 @@ describe('GIVEN I want to create a new Task with List create method', () => {
     describe('WHEN parameters are valid', () => {
         test('then it adds 1 task to task List owner', async () => {
             expect(
-                Task.create(validProps, 'uuid-task-1'),
+                Task.create(validProps, TaskId.create('uuid-task-1')),
             ).toEqual({
                 id: { value: 'uuid-task-1' },
                 props: {
                     label: validProps.label,
                     description: validProps.description,
-                    parentTaskId: validProps.listId,
+                    listId: validProps.listId,
                     public: validProps.public,
                     deadline: validProps.deadline,
                 },

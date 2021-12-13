@@ -1,40 +1,43 @@
 import { CommandHandlerInterface } from '../../common/command/command_handler_interface';
-import { Identifier } from '../../common/domain/indentifier';
 import { IdGeneratorInterface } from '../../common/services/id_generator_interface';
 import { List } from '../domain/list';
+import { ListId } from '../domain/list_id';
 import { ListLabel } from '../domain/list_label';
-import { ListUser } from '../domain/owner';
-import { ListUserRepositoryInterface } from '../repositories/owner_repository_interface';
+import { Owner } from '../domain/owner';
+import { OwnerId } from '../domain/owner_id';
+import { ListRepositoryInterface } from '../repositories/list_repository_interface';
+import { OwnerRepositoryInterface } from '../repositories/owner_repository_interface';
+
 import { CreateListCommandInterface } from './create_list_command_interface';
 
 export class CreateListCommandHandler implements CommandHandlerInterface<CreateListCommandInterface, void> {
     constructor(
-        private listUserRepository: ListUserRepositoryInterface,
+        private listRepository: ListRepositoryInterface,
+        private ownerRepository: OwnerRepositoryInterface,
         private idGenerator: IdGeneratorInterface,
     ) {
-        this.listUserRepository = listUserRepository;
+        this.listRepository = listRepository;
+        this.ownerRepository = ownerRepository;
         this.idGenerator = idGenerator;
     }
 
     async execute(
         payload: CreateListCommandInterface,
     ): Promise<void> {
-        let listUser = await this.listUserRepository.findById(payload.userId);
+        let owner = await this.ownerRepository.findById(payload.ownerId);
 
-        if (!listUser) {
-            listUser = new ListUser(payload.userId, []);
+        if (!owner) {
+            owner = Owner.create({}, OwnerId.create(payload.ownerId));
         }
 
-        const listId = new Identifier(this.idGenerator.generateId());
+        const listId = ListId.create(this.idGenerator.generateId());
         const listLabel = ListLabel.create({ value: payload.label });
 
-        List.create({
-            id: listId,
+        const list = List.create({
             label: listLabel,
-            tasks: [],
-            listUserId: listUser.id,
-        });
+            ownerId: owner.ownerId,
+        }, listId);
 
-        await this.listUserRepository.persist(listUser);
+        await this.listRepository.persist(list);
     }
 }

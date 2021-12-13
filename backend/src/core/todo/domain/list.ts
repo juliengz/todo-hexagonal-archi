@@ -1,17 +1,23 @@
 import { Entity } from '../../common/domain/entity';
+import { Identifier } from '../../common/domain/indentifier';
+import { ListId } from './list_id';
 import { ListLabel } from './list_label';
 import { OwnerId } from './owner_id';
 import { Task } from './task';
 
 export interface ListPropsInterface {
     label: ListLabel
-    tasks: Task[];
+    tasks?: Task[];
     ownerId: OwnerId;
 }
 
 export class List extends Entity<ListPropsInterface> {
-    private constructor(props: ListPropsInterface, id: string) {
+    private constructor(props: ListPropsInterface, id: Identifier<string>) {
         super(props, id);
+    }
+
+    get listId(): ListId {
+        return ListId.create(this.id.toValue());
     }
 
     get label(): ListLabel {
@@ -26,7 +32,7 @@ export class List extends Entity<ListPropsInterface> {
         return this.tasks;
     }
 
-    static create(props: ListPropsInterface, id: string): List {
+    static create(props: ListPropsInterface, id: Identifier<string>): List {
         const defaultListProps: ListPropsInterface = {
             ...props,
             tasks: [],

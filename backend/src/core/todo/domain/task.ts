@@ -1,6 +1,8 @@
 import { Entity } from '../../common/domain/entity';
+import { Identifier } from '../../common/domain/indentifier';
 import { ListId } from './list_id';
 import { TaskDescription } from './task_description';
+import { TaskId } from './task_id';
 import { TaskLabel } from './task_label';
 
 export interface TaskPropsInterface {
@@ -12,8 +14,12 @@ export interface TaskPropsInterface {
 }
 
 export class Task extends Entity<TaskPropsInterface> {
-    private constructor(props: TaskPropsInterface, id: string) {
+    private constructor(props: TaskPropsInterface, id: Identifier<string>) {
         super(props, id);
+    }
+
+    get taskId(): ListId {
+        return TaskId.create(this.id.toValue());
     }
 
     get listId(): ListId {
@@ -36,7 +42,7 @@ export class Task extends Entity<TaskPropsInterface> {
         return this.deadline;
     }
 
-    static create(props: TaskPropsInterface, id: string): Task {
+    static create(props: TaskPropsInterface, id: Identifier<string>): Task {
         return new Task(props, id);
     }
 }

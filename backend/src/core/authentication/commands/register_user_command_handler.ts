@@ -1,8 +1,8 @@
-import { CommandHandlerInterface } from '../../../common/command/command_handler_interface';
-import { IdGeneratorInterface } from '../../../common/services/id_generator_interface';
-import { User } from '../../domain/entities/user';
-import { HasherInterface } from '../../ports/hashers/hasher_interface';
-import { UserRepositoryInterface } from '../../ports/persistence/user_repository_interface';
+import { CommandHandlerInterface } from '../../common/command/command_handler_interface';
+import { IdGeneratorInterface } from '../../common/services/id_generator_interface';
+import { User } from '../domain/entities/user';
+import { HasherInterface } from '../hashers/hasher_interface';
+import { UserRepositoryInterface } from '../persistence/user_repository_interface';
 
 import { RegisterUserCommandInterface } from './register_list_command_interface';
 

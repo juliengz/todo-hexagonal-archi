@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
 import bcrypt from 'bcrypt';
-import { HasherInterface } from '../../core/authentication/ports/hashers/hasher_interface';
+import { HasherInterface } from '../../core/authentication/hashers/hasher_interface';
 
 export default class PasswordHasher implements HasherInterface {
     hash(plainValue: string): string {

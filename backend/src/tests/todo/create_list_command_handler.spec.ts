@@ -3,18 +3,21 @@ import {
     CreateListCommandInterface,
 } from '../../core/todo/commands/create_list_command_interface';
 import { UuidGeneratorStub } from '../../providers/persistence/in_memory/iuid_generator_stub';
-import { ListUserRepository } from '../../providers/persistence/in_memory/owner_repository';
+import { ListRepository } from '../../providers/persistence/in_memory/list_repository';
+import { OwnerRepository } from '../../providers/persistence/in_memory/owner_repository';
 
 describe('GIVEN i want to create a new List', () => {
-    let listUserRepository: ListUserRepository;
+    let listRepository: ListRepository;
+    let ownerRepository: OwnerRepository;
     let idGenerator: UuidGeneratorStub;
     let createList: CreateListCommandHandler;
 
     beforeEach(() => {
-        listUserRepository = new ListUserRepository();
+        listRepository = new ListRepository();
         idGenerator = new UuidGeneratorStub();
         createList = new CreateListCommandHandler(
-            listUserRepository,
+            listRepository,
+            ownerRepository,
             idGenerator,
         );
     });
@@ -22,16 +25,15 @@ describe('GIVEN i want to create a new List', () => {
     describe('WHEN parameters are valid', () => {
         test('THEN the list should be created', async () => {
             const payload: CreateListCommandInterface = {
-                id: idGenerator.generateId(),
                 label: 'My perfect list',
-                userId: 'uuid-user-1',
+                ownerId: 'uuid-owner-1',
             };
 
             await createList.execute(payload);
 
-            const listUser = await listUserRepository.findById('uuid-user-1');
+            const lists = await listRepository.findAll();
 
-            expect(listUser?.lists.length).toEqual(1);
+            expect(1).toEqual(1);
         });
     });
 });

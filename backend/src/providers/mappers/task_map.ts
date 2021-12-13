@@ -1,5 +1,5 @@
-import { Mapper } from '../../common/mapper/mapper';
-import { Task } from '../domain/task';
+import { Mapper } from '../../core/common/mapper/mapper';
+import { Task } from '../../core/todo/domain/task';
 
 export class TaskMap implements Mapper<Task> {
     public static toPersistence(task: Task): any {

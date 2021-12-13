@@ -4,11 +4,11 @@
 
 import {
     RegisterUserCommandHandler,
-} from '../../core/authentication/application/commands/register_user_command_handler';
-import { HasherInterface } from '../../core/authentication/ports/hashers/hasher_interface';
+} from '../../core/authentication/commands/register_user_command_handler';
+import { HasherInterface } from '../../core/authentication/hashers/hasher_interface';
 import {
     UserRepositoryInterface,
-} from '../../core/authentication/ports/persistence/user_repository_interface';
+} from '../../core/authentication/persistence/user_repository_interface';
 import { IdGeneratorInterface } from '../../core/common/services/id_generator_interface';
 import PasswordHasherStub from '../../providers/hashers/password_hasher_stub';
 import { UuidGeneratorStub, expectedId } from '../../providers/persistence/in_memory/iuid_generator_stub';
